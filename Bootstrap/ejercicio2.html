@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño Responsive Bootstrap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Solo colores de fondo */
+        .header {
+            background-color: #00ff00;
+        }
+        .sidebar {
+            background-color: #ff0000;
+        }
+        .main-header {
+            background-color: #ff00ff;
+        }
+        .content-box {
+            background-color: #ff9966;
+        }
+        .footer-box {
+            background-color: #0000ff;
+        }
+        .footer {
+            background-color: #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid g-0">
+        <!-- Header superior verde -->
+        <div class="row g-0">
+            <div class="col-12 header p-4"></div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="row g-0">
+            <!-- Sidebar roja: md/lg/xl=2col, sm=3col, xs=12col (arriba) -->
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-12 sidebar p-5"></div>
+
+            <!-- Área de contenido principal: md/lg/xl=10col, sm=9col, xs=12col -->
+            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-9 col-12">
+                <!-- Header magenta -->
+                <div class="row g-0">
+                    <div class="col-12 main-header p-4"></div>
+                </div>
+
+                <!-- Cajas naranjas: md/lg/xl=2 columnas lado a lado, sm=2 apiladas, xs=2 apiladas -->
+                <div class="row g-0">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 p-0">
+                        <div class="content-box p-5 m-2"></div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 p-0">
+                        <div class="content-box p-5 m-2"></div>
+                    </div>
+                </div>
+
+                <!-- Cajas azules: 10 cajas totales -->
+                <!-- md/lg/xl: 5 por fila en 2 filas separadas, sm: 3+3+3+1, xs: 2 por fila -->
+                <div class="row g-0">
+                    <div class="col-xl col-lg col-md col-sm-4 col-6 p-0">
+                        <div class="footer-box p-4 m-2"></div>
+                    </div>
+                    <div class="col-xl col-lg col-md col-sm-4 col-6 p-0">
+                        <div class="footer-box p-4 m-2"></div>
+                    </div>
+                    <div class="col-xl col-lg col-md col-sm-4 col-6 p-0">
+                        <div class="footer-box p-4 m-2"></div>
+                    </div>
+                    <div class="col-xl col-lg col-md col-sm-4 col-6 p-0">
+                        <div class="footer-box p-4 m-2"></div>
+                    </div>
+                    <div class="col-xl col-lg col-md col-sm-4 col-6 p-0">
+                        <div class="footer-box p-4 m-2"></div>
+                    </div>
+                    
+                    <!-- Salto de fila solo en md/lg/xl -->
+                    <div class="w-100 d-none d-md-block"></div>
+                    
+                    <div class="col-xl col-lg col-md col-sm-4 col-6 p-0">
+                        <div class="footer-box p-4 m-2"></div>
+                    </div>
+                    <div class="col-xl col-lg col-md col-sm-4 col-6 p-0">
+                        <div class="footer-box p-4 m-2"></div>
+                    </div>
+                    <div class="col-xl col-lg col-md col-sm-4 col-6 p-0">
+                        <div class="footer-box p-4 m-2"></div>
+                    </div>
+                    <div class="col-xl col-lg col-md col-sm-4 col-6 p-0">
+                        <div class="footer-box p-4 m-2"></div>
+                    </div>
+                    <div class="col-xl col-lg col-md col-sm-4 col-6 p-0">
+                        <div class="footer-box p-4 m-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer inferior verde -->
+        <div class="row g-0">
+            <div class="col-12 footer p-4"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
