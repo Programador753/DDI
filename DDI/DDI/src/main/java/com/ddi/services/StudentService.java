@@ -1,8 +1,8 @@
 package com.ddi.services;
 
-import com.ddi.exceptions.EmployeeNotFoundException;
-import com.ddi.models.Employee;
-import com.ddi.repositories.EmployeeRepository;
+import com.ddi.exceptions.StudentNotFoundException;
+import com.ddi.models.Student;
+import com.ddi.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,39 +14,39 @@ import java.util.List;
 public class StudentService {
 
     @Autowired
-    private EmployeeRepository repository;
+    private StudentRepository repository;
 
-    public List<Employee> getAllEmployees() {
+    public List<Student> getAllStudents() {
         return repository.findAll();
     }
     // end::get-aggregate-root[]
 
-    public Employee newEmployee(@RequestBody Employee newEmployee) {
-        return repository.save(newEmployee);
+    public Student newStudent(@RequestBody Student newStudent) {
+        return repository.save(newStudent);
     }
 
-    // Se podria cambiar el optional por return Employee si pusiesemos una
+    // Se podria cambiar el optional por return Student si pusiesemos una
     // exception creada por nosotros.
-    public Employee getEmployee(@PathVariable Long id) throws EmployeeNotFoundException  {
+    public Student getStudent(@PathVariable Long id) throws StudentNotFoundException  {
         return repository.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee with id = " + id + " not found."));
+                .orElseThrow(() -> new StudentNotFoundException("Student with id = " + id + " not found."));
         // return repository.findById(id)
-        //      .orElseThrow(() -> new EmployeeNotFoundException(id));
+        //      .orElseThrow(() -> new StudentNotFoundException(id));
     }
 
-    public Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
+    public Student replaceStudent(@RequestBody Student newStudent, @PathVariable Long id) {
         return repository.findById(id)
-                .map(employee -> {
-                    employee.setName(newEmployee.getName());
-                    employee.setRole(newEmployee.getRole());
-                    return repository.save(employee);
+                .map(student -> {
+                    student.setName(newStudent.getName());
+                    student.setRole(newStudent.getRole());
+                    return repository.save(student);
                 })
                 .orElseGet(() -> {
-                    return repository.save(newEmployee);
+                    return repository.save(newStudent);
                 });
     }
 
-    public void deleteEmployee(@PathVariable Long id) {
+    public void deleteStudent(@PathVariable Long id) {
         repository.deleteById(id);
     }
 }

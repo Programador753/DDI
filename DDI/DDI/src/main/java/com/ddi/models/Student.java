@@ -1,15 +1,12 @@
 package com.ddi.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 
 /**
- * Class that contains an Employee
+ * Class that contains a Student
  *
  * @author Alvaro Juan Ciriaco
  */
@@ -17,27 +14,19 @@ import java.util.Objects;
 public class Student {
 
     /**
-     * Id of the employee
+     * Id of the student
      */
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 
     /**
-     * Name of the employee
+     * Name of the student
      */
     private String name;
 
     /**
-     * Role of the employee
+     * Role of the student
      */
     private String role;
-
-    /**
-     * Si no añadimos el ignore, se genera un bucle infinito porque el JSON
-     * nunca deja de formarse.
-     */
-    @JsonIgnoreProperties("employee")
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<Address> addresses = new ArrayList<>();
 
     public Student() {}
 
@@ -58,8 +47,6 @@ public class Student {
         return this.role;
     }
 
-    public List<Address> getAddress() { return this.addresses; }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -72,27 +59,24 @@ public class Student {
         this.role = role;
     }
 
-    public void setAddress(List<Address> addresses) { this.addresses = addresses; }
-
     @Override
     public boolean equals(Object o) {
         if (this == o)
             return true;
         if (!(o instanceof Student))
             return false;
-        Student employee = (Student) o;
-        return Objects.equals(this.id, employee.id) && Objects.equals(this.name, employee.name)
-                && Objects.equals(this.role, employee.role);
+        Student student = (Student) o;
+        return Objects.equals(this.id, student.id) && Objects.equals(this.name, student.name)
+                && Objects.equals(this.role, student.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.name, this.role, this.addresses);
+        return Objects.hash(this.id, this.name, this.role);
     }
 
     @Override
     public String toString() {
-        return "Employee{" + "id=" + this.id + ", name='" + this.name + '\'' + ", role='" + this.role + '\'' +
-                ", size_address='" + this.addresses.size() + '\'' + '}';
+        return "Student{" + "id=" + this.id + ", name='" + this.name + '\'' + ", role='" + this.role + '\'' + '}';
     }
 }
