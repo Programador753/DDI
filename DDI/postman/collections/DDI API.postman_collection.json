@@ -1,0 +1,521 @@
+{
+  "info": {
+    "_postman_id": "ddi-api-collection-001",
+    "name": "DDI API",
+    "description": "REST API collection for the DDI Spring Boot application. This API manages Schools, Students, and Subjects with full CRUD operations and relationship management.\n\n## Base URL\n`http://localhost:8080`\n\n## Resources\n- **Schools**: Manage educational institutions (1:N relationship with Students)\n- **Students**: Manage student records (N:1 with School, N:M with Subjects)\n- **Subjects**: Manage academic subjects (N:M relationship with Students)\n\n## Database\nMySQL database on port 3300",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Schools",
+      "item": [
+        {
+          "name": "Get All Schools",
+          "id": "b9b6e44d-0150-41c0-8a9e-62ab0a8bd427",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/schools",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "schools"
+              ]
+            },
+            "description": "Retrieves a list of all schools in the system.\n\n**Response**: Array of School objects"
+          },
+          "response": []
+        },
+        {
+          "name": "Get School by ID",
+          "id": "c1319cc2-a967-4c25-b404-2b3921f0624c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/schools/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "schools",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "School ID"
+                }
+              ]
+            },
+            "description": "Retrieves a specific school by its ID.\n\n**Path Parameters**:\n- `id` (Long): The unique identifier of the school\n\n**Response Codes**:\n- `200 OK`: School found\n- `404 Not Found`: School does not exist"
+          },
+          "response": []
+        },
+        {
+          "name": "Create School",
+          "id": "d46c75ee-7a02-4642-8df1-3ca3a3563623",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Example School\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/schools",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "schools"
+              ]
+            },
+            "description": "Creates a new school.\n\n**Request Body**:\n```json\n{\n    \"name\": \"string\" // Name of the school\n}\n```\n\n**Response**: The created School object with generated ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update School",
+          "id": "7b5bdabe-1c44-481c-9da6-2390be2783ad",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Updated School Name\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/schools/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "schools",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "School ID"
+                }
+              ]
+            },
+            "description": "Updates an existing school.\n\n**Path Parameters**:\n- `id` (Long): The unique identifier of the school\n\n**Request Body**:\n```json\n{\n    \"name\": \"string\" // Updated name of the school\n}\n```\n\n**Response Codes**:\n- `200 OK`: School updated successfully\n- `404 Not Found`: School does not exist"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete School",
+          "id": "97f6b987-ae81-47af-8045-8d5ee73506e9",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/schools/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "schools",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "School ID"
+                }
+              ]
+            },
+            "description": "Deletes a school by its ID.\n\n**Path Parameters**:\n- `id` (Long): The unique identifier of the school\n\n**Response Codes**:\n- `204 No Content`: School deleted successfully\n- `404 Not Found`: School does not exist\n\n**Note**: Due to cascade settings, deleting a school will also delete all associated students."
+          },
+          "response": []
+        },
+        {
+          "name": "Add Student to School",
+          "id": "3cdd72f8-4b6b-4819-8b88-60261fa15a08",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"John Doe\",\n    \"role\": \"Student\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/schools/:schoolId/students",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "schools",
+                ":schoolId",
+                "students"
+              ],
+              "variable": [
+                {
+                  "key": "schoolId",
+                  "value": "1",
+                  "description": "School ID"
+                }
+              ]
+            },
+            "description": "Adds a new student to a specific school (1:N relationship).\n\n**Path Parameters**:\n- `schoolId` (Long): The unique identifier of the school\n\n**Request Body**:\n```json\n{\n    \"name\": \"string\",  // Student name\n    \"role\": \"string\"   // Student role\n}\n```\n\n**Response Codes**:\n- `200 OK`: Student added successfully\n- `404 Not Found`: School does not exist"
+          },
+          "response": []
+        }
+      ],
+      "id": "a2d2c0d4-53bb-464c-9573-d2bc38cbb357",
+      "description": "Endpoints for managing Schools. Schools have a 1:N relationship with Students."
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "Get All Students",
+          "id": "0d18cc6c-91c9-4345-aca2-d64d58591eb9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students"
+              ]
+            },
+            "description": "Retrieves a list of all students in the system.\n\n**Response**: Array of Student objects"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Student by ID",
+          "id": "07d9ca9f-d42e-420c-ba90-82795939ef9e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Student ID"
+                }
+              ]
+            },
+            "description": "Retrieves a specific student by their ID.\n\n**Path Parameters**:\n- `id` (Long): The unique identifier of the student\n\n**Response Codes**:\n- `200 OK`: Student found\n- `404 Not Found`: Student does not exist (throws StudentNotFoundException)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Student",
+          "id": "a0a55df0-cde1-4a20-9f84-b709c621b465",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Jane Smith\",\n    \"role\": \"Student\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students"
+              ]
+            },
+            "description": "Creates a new student.\n\n**Request Body**:\n```json\n{\n    \"name\": \"string\",  // Student name\n    \"role\": \"string\"   // Student role\n}\n```\n\n**Response**: The created Student object with generated ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Student",
+          "id": "aa904a9c-9120-4bf6-b19f-ac7f50275307",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Jane Smith Updated\",\n    \"role\": \"Graduate Student\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/students/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Student ID"
+                }
+              ]
+            },
+            "description": "Replaces an existing student's data.\n\n**Path Parameters**:\n- `id` (Long): The unique identifier of the student\n\n**Request Body**:\n```json\n{\n    \"name\": \"string\",  // Updated student name\n    \"role\": \"string\"   // Updated student role\n}\n```\n\n**Response**: The updated Student object"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Student",
+          "id": "3467aba5-3205-4532-a608-cd1b7b94cf0a",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/students/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "students",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Student ID"
+                }
+              ]
+            },
+            "description": "Deletes a student by their ID.\n\n**Path Parameters**:\n- `id` (Long): The unique identifier of the student\n\n**Response**: No content on success"
+          },
+          "response": []
+        }
+      ],
+      "id": "5ca98013-007e-4963-9022-770405a320a6",
+      "description": "Endpoints for managing Students. Students have a N:1 relationship with Schools and N:M relationship with Subjects."
+    },
+    {
+      "name": "Subjects",
+      "item": [
+        {
+          "name": "Get All Subjects",
+          "id": "2127a194-d32d-481c-a616-6fe2acc36e8b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/subjects",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subjects"
+              ]
+            },
+            "description": "Retrieves a list of all subjects in the system.\n\n**Response**: Array of Subject objects"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Subject by ID",
+          "id": "434d5236-4f41-4559-b041-51f7fd338a68",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/subjects/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subjects",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Subject ID"
+                }
+              ]
+            },
+            "description": "Retrieves a specific subject by its ID.\n\n**Path Parameters**:\n- `id` (Long): The unique identifier of the subject\n\n**Response Codes**:\n- `200 OK`: Subject found\n- `404 Not Found`: Subject does not exist"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Subject",
+          "id": "f88e664a-8de9-45e7-b936-6b4b6e83e7e7",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Matematicas\",\n    \"description\": \"Matematicas\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/subjects",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subjects"
+              ]
+            },
+            "description": "Creates a new subject.\n\n**Request Body**:\n```json\n{\n    \"name\": \"string\",        // Subject name\n    \"description\": \"string\"  // Subject description\n}\n```\n\n**Response**: The created Subject object with generated ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Subject",
+          "id": "fc573c19-7114-4291-a079-0669969cd55c",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Advanced Mathematics\",\n    \"description\": \"Updated course description with new curriculum\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/subjects/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subjects",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Subject ID"
+                }
+              ]
+            },
+            "description": "Updates an existing subject.\n\n**Path Parameters**:\n- `id` (Long): The unique identifier of the subject\n\n**Request Body**:\n```json\n{\n    \"name\": \"string\",        // Updated subject name\n    \"description\": \"string\"  // Updated subject description\n}\n```\n\n**Response Codes**:\n- `200 OK`: Subject updated successfully\n- `404 Not Found`: Subject does not exist"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Subject",
+          "id": "c4739c5f-e515-43ff-a825-4121b3233d53",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/subjects/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subjects",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "Subject ID"
+                }
+              ]
+            },
+            "description": "Deletes a subject by its ID.\n\n**Path Parameters**:\n- `id` (Long): The unique identifier of the subject\n\n**Response Codes**:\n- `204 No Content`: Subject deleted successfully\n- `404 Not Found`: Subject does not exist"
+          },
+          "response": []
+        },
+        {
+          "name": "Enroll Student in Subject",
+          "id": "1ecef3f2-a0bd-4c5c-95e2-816bf34329e8",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/subjects/:subjectId/enroll/:studentId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subjects",
+                ":subjectId",
+                "enroll",
+                ":studentId"
+              ],
+              "variable": [
+                {
+                  "key": "subjectId",
+                  "value": "1",
+                  "description": "Subject ID"
+                },
+                {
+                  "key": "studentId",
+                  "value": "1",
+                  "description": "Student ID"
+                }
+              ]
+            },
+            "description": "Enrolls a student in a subject (N:M relationship).\n\n**Path Parameters**:\n- `subjectId` (Long): The unique identifier of the subject\n- `studentId` (Long): The unique identifier of the student\n\n**Response Codes**:\n- `200 OK`: Student enrolled successfully, returns the Student object\n- `404 Not Found`: Subject or Student does not exist"
+          },
+          "response": []
+        }
+      ],
+      "id": "abb349bc-ddff-45c9-a41f-eaa2d1ccc7b3",
+      "description": "Endpoints for managing Subjects (academic courses). Subjects have a N:M relationship with Students."
+    }
+  ],
+  "variable": [
+    {
+      "id": "96c9e309-d671-4d7e-accd-3b246bc4e29b",
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ]
+}
