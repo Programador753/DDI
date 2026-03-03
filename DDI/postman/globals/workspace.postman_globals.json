@@ -1,7 +1,23 @@
 {
   "id": "50a82952-0ba9-468c-b2c3-cfb9292587d9",
   "name": "Globals",
-  "values": [],
+  "values": [
+    {
+      "key": "football",
+      "value": "",
+      "enabled": true,
+      "type": "secret",
+      "description": ""
+    },
+    {
+      "key": "fotball",
+      "value": "",
+      "enabled": true,
+      "type": "secret",
+      "description": ""
+    }
+  ],
   "_postman_variable_scope": "globals",
-  "_postman_exported_at": "2026-02-08T18:55:24.090Z"
+  "_postman_exported_at": "2026-03-03T18:17:39.318Z",
+  "_postman_exported_using": "Postman/11.0.0"
 }

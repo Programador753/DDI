@@ -227,7 +227,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "1",
+                  "value": "2",
                   "description": "Student ID"
                 }
               ]
@@ -393,7 +393,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"Matematicas\",\n    \"description\": \"Matematicas\"\n}"
+              "raw": "{\n    \"name\": \"Matematicas II\",\n    \"description\": \"Matematicas\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/subjects",
@@ -496,7 +496,7 @@
                 },
                 {
                   "key": "studentId",
-                  "value": "1",
+                  "value": "3",
                   "description": "Student ID"
                 }
               ]
