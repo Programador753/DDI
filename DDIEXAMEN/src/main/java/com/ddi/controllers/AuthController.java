@@ -1,8 +1,11 @@
 package com.ddi.controllers;
 
+import com.ddi.models.Role;
+import com.ddi.models.Usuario;
 import com.ddi.requestObjects.AuthRequest;
 import com.ddi.requestObjects.AuthResponse;
 import com.ddi.services.JwtService;
+import com.ddi.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,6 +31,25 @@ public class AuthController {
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    /**
+     * Pre: request contains a valid nombre, correoElectronico and password.
+     * Post: creates a new user and returns a JWT token.
+     */
+    @PostMapping("/auth/register")
+    public AuthResponse register(@RequestBody Usuario user) {
+        // Set default role if not provided
+        if (user.getRole() == null) {
+            user.setRole(Role.USER);
+        }
+        usuarioService.newUsuario(user);
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getCorreoElectronico());
+        final String jwt = jwtService.generateToken(userDetails);
+        return new AuthResponse(jwt);
+    }
 
     /**
      * Pre: request contains a valid email and password.
