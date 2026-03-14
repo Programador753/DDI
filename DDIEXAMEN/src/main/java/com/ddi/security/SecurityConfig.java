@@ -38,8 +38,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                        .requestMatchers("/error").denyAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/error").permitAll()
+                        // Rutas seguras: GET y POST /peliculas requieren autenticación
+                        .requestMatchers(HttpMethod.GET, "/peliculas").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/peliculas").authenticated()
+                        // El resto de rutas son públicas
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

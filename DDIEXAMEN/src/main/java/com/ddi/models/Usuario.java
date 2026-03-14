@@ -45,15 +45,6 @@ public class Usuario implements UserDetails {
      */
     private @Enumerated(EnumType.STRING) @Column(nullable = false) Role role;
 
-    /**
-     * Eventos in which the usuario participates.
-     * Si no añadimos el ignore, se genera un bucle infinito porque el JSON
-     * nunca deja de formarse.
-     */
-    @JsonIgnoreProperties("participantes")
-    @ManyToMany(mappedBy = "participantes")
-    private List<EventoDeportivo> eventos = new ArrayList<>();
-
     public Usuario() {}
 
     public Usuario(String nombre, String correoElectronico, String password, Role role) {
@@ -141,22 +132,6 @@ public class Usuario implements UserDetails {
      */
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    /**
-     * Pre: -
-     * Post: returns the list of eventos of the usuario.
-     */
-    public List<EventoDeportivo> getEventos() {
-        return this.eventos;
-    }
-
-    /**
-     * Pre: eventos not null.
-     * Post: the list of eventos of the usuario is updated.
-     */
-    public void setEventos(List<EventoDeportivo> eventos) {
-        this.eventos = eventos;
     }
 
     /**

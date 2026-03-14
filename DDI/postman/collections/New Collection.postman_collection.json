@@ -1,0 +1,24 @@
+{
+  "info": {
+    "_postman_id": "c7782ed2-4598-4e5d-ae81-c6cc83276c1e",
+    "name": "Examen",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Peliculas",
+      "item": [],
+      "id": "9f8fa4c8-0980-47ee-a695-141eb760f6a3"
+    },
+    {
+      "name": "Directores",
+      "item": [],
+      "id": "89454198-9e35-4d6f-8c92-56c62770997b"
+    },
+    {
+      "name": "Comentarios",
+      "item": [],
+      "id": "67bc7741-05c5-48db-8b89-5744449ced8b"
+    }
+  ]
+}
